@@ -52,10 +52,10 @@ export class V1PortifiStack extends Stack {
 		);
 
 		/*****		SECRETS		*****/
-		const secrets = secretsManager.Secret.fromSecretCompleteArn(
+		const secrets = secretsManager.Secret.fromSecretPartialArn(
 			this,
 			"MainSecrets",
-			"arn:aws:secretsmanager:us-east-2:191860909899:secret:portifi-secrets-2d0Oly"
+			"arn:aws:secretsmanager:us-east-2:191860909899:secret:portifi-secrets"
 		);
 		secrets.grantRead(meanReversionLambda);
 		singleStalkLambda.addEnvironment("MAIN_SECRETS", secrets.secretArn);
