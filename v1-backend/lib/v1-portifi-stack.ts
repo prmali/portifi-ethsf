@@ -2,6 +2,7 @@ import {
 	Stack,
 	StackProps,
 	aws_lambda_nodejs as lambda,
+	aws_secretsmanager as secretsManager,
 	Duration,
 } from "aws-cdk-lib";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
@@ -21,12 +22,7 @@ export class V1PortifiStack extends Stack {
 			target: "es2020",
 		};
 
-		// The code that defines your stack goes here
-
-		// example resource
-		// const queue = new sqs.Queue(this, 'V1BackendQueue', {
-		//   visibilityTimeout: cdk.Duration.seconds(300)
-		// });
+		/*****		LAMBDAS		*****/
 		const meanReversionLambda = new lambda.NodejsFunction(
 			this,
 			"MeanReversionLambda",
@@ -40,5 +36,28 @@ export class V1PortifiStack extends Stack {
 				bundling,
 			}
 		);
+
+		const singleStalkLambda = new lambda.NodejsFunction(
+			this,
+			"SingleStalkLambda",
+			{
+				entry: path.resolve(__dirname, "../src/singleStalk/app.ts"),
+				handler: "lambdaHandler",
+				functionName: "DEV-Portifi-SingleStalk",
+				memorySize: 512,
+				timeout: Duration.minutes(2),
+				runtime: Runtime.NODEJS_16_X,
+				bundling,
+			}
+		);
+
+		/*****		SECRETS		*****/
+		const secrets = secretsManager.Secret.fromSecretCompleteArn(
+			this,
+			"MainSecrets",
+			"arn:aws:secretsmanager:us-east-2:191860909899:secret:portifi-secrets-2d0Oly"
+		);
+		secrets.grantRead(meanReversionLambda);
+		singleStalkLambda.addEnvironment("MAIN_SECRETS", secrets.secretArn);
 	}
 }
