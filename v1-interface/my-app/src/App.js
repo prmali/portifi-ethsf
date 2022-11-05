@@ -218,8 +218,8 @@ export default function Example() {
 
 
         
-        <main className ="bg-indigo-900 md:grid-col-2 flex flex-row px-14 py-14">
-          <div className="mx-auto w-5/6 max-w-7xl py-6 flex flex-row">
+        <main className ="bg-gradient-to-r from-black to-indigo-900 md:grid-col-2 flex flex-row px-14 py-20">
+          <div className="mx-auto my-auto w-screen h-screen max-w-7xl py-20 flex flex-row">
             {/* Replace with your content */}
             <div className="text-white px-4 py-10 sm:px-0 w-full">
               
@@ -227,7 +227,7 @@ export default function Example() {
 
 
               {/*Type of Strategy Header*/}
-              <div className="container-sm rounded-lg w-36 h-14 border-4 py-3 text-center">
+              <div className="container-sm rounded-lg w-36 h-14 border-4 py-3 my-3 text-center text-md">
                 Type of Strategy
               </div>
               
@@ -242,28 +242,60 @@ export default function Example() {
 
 
               
-              {/*Vault Deposits*/}
+              {/*Vault Deposits and Bar*/}
               <div className='py-4'>
-                Current Vault Deposits
+                <div className="flex col-2">
+                  <div className=" text-lg mr-auto">
+                    Current Vault Deposits
+                  </div>
+                  <div className="space-x-reverse">
+                    626.42 RETH
+                  </div>
+                </div>
+                
                 <br></br>
-                <progress className="progress progress-info w-6/12 h-4 my-3" value="80" max="100"></progress>
+                <progress className="progress progress-info bg-gray-600 w-5/6 h-4 my-3" value="80" max="100"></progress>
                 <br></br>
-                Max Vault Capacity
+                <div className="flex col-2">
+                  <div className=" text-lg mr-auto">
+                    Max Vault Capacity
+                  </div>
+                  <div className="flex">
+                    5,000.00 RETH
+                  </div>
+                </div>
+              </div>
+
+              <div className="container-sm rounded-lg w-5/6 h-48 bg-gray-900 border-4 border-cyan-400 py-3 px-3 my-3 flex col-3">
+
+                {/*Price Feed*/}
+                <div className='text-3xl font-bold'>
+                  Current Price: 3 ETH
+                </div>
+
+                {/*Price Change*/}
+                <div className='text-xl primary-indigo-400'>
+                    Filler
+                </div>
               </div>
             </div>
 
             {/* /End replace */}
           </div>
+          
+          
+          
+          
           {/*Deposit and Withdraw (check the constants at the top to edit contents of tabs)*/}
-          <div className=" bg-indigo-900 flex flex-row rounded-lg mx-auto w-1/2 h-5/6 my-0 items-center gap-y-16 gap-x-8 mx-10 sm:px-6 sm:py-32 items-center justify-center">
-            <Tabs className="bg-white rounded-md w-full h-full">
+          <div className="flex flex-row rounded-xl m-auto w-5/6 h-screen my-0 items-center gap-y-16 gap-x-8 mx-10 sm:px-6 sm:py-32 items-center justify-center">
+            <Tabs className="text-white content-center place-content-center justify-self-center bg-gray-900 border-4 border-cyan-400 backdrop-opacity-70 bg-blend-soft-light rounded-md w-full h-full">
               
               {/*Deposit Function*/}
-              <Tabs.TabPane className="w-full" tab="Deposit" key="deposit">
+              <Tabs.TabPane className="text-xl text-white w-full" tab="Deposit" key="deposit">
               <div className="d-flex flex-column p-4 w-100">
-                <div className="text-lg">AMOUNT (ETH)</div>
+                <div className="font-bold">AMOUNT (ETH)</div>
                   <div class="sc-iemWCZ ffIUWY mb-2">
-                  <InputNumber min={1} max={10000} defaultValue={3} onChange={onChange} />
+                  <InputNumber className="" min={1} max={10000} defaultValue={3} onChange={onChange} />
                   </div>
                 <div className="text-lg">
                   <span className="sc-fFSPTT gtKdvQ">Wallet Balance </span>
@@ -276,9 +308,9 @@ export default function Example() {
             
             {/*Withdraw Function*/}
               <Tabs.TabPane tab="Withdraw" key="withdraw">
-                <div class="d-flex flex-column p-4 w-100">
+                <div class=" text-white d-flex flex-column p-4 w-100">
                   <div>
-                    <div className="text-lg">AMOUNT (wETH)</div>
+                    <div className="text-xl font-bold">AMOUNT (wETH)</div>
                     <div class="sc-iemWCZ ffIUWY mb-2"><InputNumber min={1} max={10000} defaultValue={3} onChange={onChange} /></div>
                     <button type="button" class="sc-lmgQwP sc-ezzafa hpRDUw dvHFX mt-4 btn py-3 mb-0">Connect Wallet</button>
                   </div>

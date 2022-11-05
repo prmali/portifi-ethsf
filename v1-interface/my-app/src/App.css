@@ -41,23 +41,30 @@
 
 .ant-tabs-ink-bar {
   height: 5px;
-  background: red !important;
+  background: #3ABEF8 !important;
 }
 
 .ant-tabs-nav-list {
   width: 100%;
+  text-transform: capitalize;
+  display: inline-block;
 }
 
 .ant-tabs-tab {
-  width: 100%;
+  text-transform: capitalize;
+  width: 80%;
+  font-size: large;
   text-align: center;
   justify-content: center;
+  color: #fff;
+  
 }
 
 .ant-tabs-tab-active {
   text-align: center;
   background-color: #B9E0FF;
   color: #fff;
+  border-radius: 0.25rem;
 }
 
 .ant-tabs-content-holder {
