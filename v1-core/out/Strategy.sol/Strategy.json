@@ -1,0 +1,240 @@
+{
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": {
+    "object": "0x6080604052348015600f57600080fd5b50600080546001600160a01b03191633179055603f80602f6000396000f3fe6080604052600080fdfea264697066735822122019693241e99f4c6d4392903b98c842ef4e7ca1aae1345ff661a58814020d674664736f6c63430008100033",
+    "sourceMap": "65:80:14:-:0;;;103:40;;;;;;;;;-1:-1:-1;121:5:14;:18;;-1:-1:-1;;;;;;121:18:14;129:10;121:18;;;65:80;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x6080604052600080fdfea264697066735822122019693241e99f4c6d4392903b98c842ef4e7ca1aae1345ff661a58814020d674664736f6c63430008100033",
+    "sourceMap": "65:80:14:-:0;;;;;",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {},
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/Strategy.sol\":\"Strategy\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/solmate/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":solmate/=lib/solmate/src/\"]},\"sources\":{\"src/Strategy.sol\":{\"keccak256\":\"0xdff79f32a77c80e431ae316dc3dd9db9b6a8707754676bd89db5c02607060ec7\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://0b7231985c9766ad94e59ae9e26ac73813ba5227e7f8cb0bd69b6cd00ee83672\",\"dweb:/ipfs/QmeKX236nevRzkby6hMe7K81ViE1pPRaJ5JaPRLG3W4T9t\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.16+commit.07a7930e"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":ds-test/=lib/solmate/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":solmate/=lib/solmate/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/Strategy.sol": "Strategy"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/Strategy.sol": {
+        "keccak256": "0xdff79f32a77c80e431ae316dc3dd9db9b6a8707754676bd89db5c02607060ec7",
+        "urls": [
+          "bzz-raw://0b7231985c9766ad94e59ae9e26ac73813ba5227e7f8cb0bd69b6cd00ee83672",
+          "dweb:/ipfs/QmeKX236nevRzkby6hMe7K81ViE1pPRaJ5JaPRLG3W4T9t"
+        ],
+        "license": "UNLICENSED"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/Strategy.sol",
+    "id": 24426,
+    "exportedSymbols": {
+      "Strategy": [
+        24425
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:106:14",
+    "nodes": [
+      {
+        "id": 24413,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:14",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 24425,
+        "nodeType": "ContractDefinition",
+        "src": "65:80:14",
+        "nodes": [
+          {
+            "id": 24415,
+            "nodeType": "VariableDeclaration",
+            "src": "86:13:14",
+            "constant": false,
+            "mutability": "mutable",
+            "name": "owner",
+            "nameLocation": "94:5:14",
+            "scope": 24425,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 24414,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "86:7:14",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "id": 24424,
+            "nodeType": "FunctionDefinition",
+            "src": "103:40:14",
+            "body": {
+              "id": 24423,
+              "nodeType": "Block",
+              "src": "117:26:14",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 24421,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 24418,
+                      "name": "owner",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 24415,
+                      "src": "121:5:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "expression": {
+                        "id": 24419,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -15,
+                        "src": "129:3:14",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 24420,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "133:6:14",
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "src": "129:10:14",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "121:18:14",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 24422,
+                  "nodeType": "ExpressionStatement",
+                  "src": "121:18:14"
+                }
+              ]
+            },
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nameLocation": "-1:-1:-1",
+            "parameters": {
+              "id": 24416,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "114:2:14"
+            },
+            "returnParameters": {
+              "id": 24417,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "117:0:14"
+            },
+            "scope": 24425,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Strategy",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          24425
+        ],
+        "name": "Strategy",
+        "nameLocation": "74:8:14",
+        "scope": 24426,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 14
+}

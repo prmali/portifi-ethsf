@@ -1,0 +1,33 @@
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "ast": {
+    "absolutePath": "src/Vault.sol",
+    "id": 24627,
+    "exportedSymbols": {},
+    "nodeType": "SourceUnit",
+    "src": "39:24:16",
+    "nodes": [
+      {
+        "id": 24626,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:16",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 16
+}

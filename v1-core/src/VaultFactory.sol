@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "./IVaultFactory.sol";
+import "./interfaces/IVaultFactory.sol";
 // import "./Vault.sol";
 
 contract VaultFactory is IVaultFactory {
@@ -26,5 +26,17 @@ contract VaultFactory is IVaultFactory {
 		require(msg.sender == registry, "Caller must be Registry Contract");
 		// vault = new Vault(_asset, _name, _symbol, _maxSize, _fee, _epochTime, _guardians);
 		vaultInfos[address(vault)] = Info({asset: _asset, name: _name, symbol: _symbol, maxSize: _maxSize, fee: _fee, epochTime: _epochTime, guardians: _guardians });
+		emit VaultCreated(address(vault), _asset, _name, _symbol, _maxSize, _fee, _epochTime, _guardians);
 	}
+
+	// TODO: Add update vault
+
+	event VaultCreated(address vault, 
+						address asset,
+						string name,
+						string symbol,
+						uint maxSize,
+						uint fee,
+						uint epochTime,
+						address[] guardians);
 }
