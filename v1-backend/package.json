@@ -1,29 +1,34 @@
 {
-  "name": "v1-backend",
-  "version": "0.1.0",
-  "bin": {
-    "v1-backend": "bin/v1-backend.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk"
-  },
-  "devDependencies": {
-    "@types/jest": "^27.5.2",
-    "@types/node": "10.17.27",
-    "@types/prettier": "2.6.0",
-    "aws-cdk": "2.45.0",
-    "jest": "^27.5.1",
-    "ts-jest": "^27.1.4",
-    "ts-node": "^10.9.1",
-    "typescript": "~3.9.7"
-  },
-  "dependencies": {
-    "aws-cdk-lib": "2.45.0",
-    "axios": "^1.1.3",
-    "constructs": "^10.0.0",
-    "source-map-support": "^0.5.21"
-  }
+	"name": "v1-backend",
+	"version": "0.1.0",
+	"bin": {
+		"v1-backend": "bin/v1-backend.js"
+	},
+	"scripts": {
+		"build": "tsc",
+		"watch": "tsc -w",
+		"test": "jest",
+		"cdk": "cdk",
+		"lambda:meanReversion": "cdk synth DEV-PortifiStack && sam local invoke MeanReversionLambda -t cdk.out/DEV-PortifiStack.template.json --no-event | tail -1 | jq",
+		"lambda:jumpBull": "cdk synth DEV-PortifiStack && sam local invoke JumpBullLambda -t cdk.out/DEV-PortifiStack.template.json --no-event | tail -1 | jq"
+	},
+	"devDependencies": {
+		"@types/jest": "^27.5.2",
+		"@types/node": "10.17.27",
+		"@types/prettier": "2.6.0",
+		"aws-cdk": "2.45.0",
+		"jest": "^27.5.1",
+		"ts-jest": "^27.1.4",
+		"ts-node": "^10.9.1",
+		"typescript": "~3.9.7"
+	},
+	"dependencies": {
+		"alchemy-sdk": "^2.2.0",
+		"aws-cdk-lib": "2.45.0",
+		"aws-sdk": "^2.1248.0",
+		"axios": "^1.1.3",
+		"constructs": "^10.0.0",
+		"ethers": "^5.7.2",
+		"source-map-support": "^0.5.21"
+	}
 }
