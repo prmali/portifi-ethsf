@@ -1,0 +1,69 @@
+specVersion: 0.0.4
+schema:
+    file: ./schema.graphql
+dataSources:
+    - kind: ethereum/contract
+      name: PoolFactory
+      network: rinkeby
+      source:
+          address: "0xc3f345215cA77248Db844b8bA11B18eD0b23288B"
+          abi: PoolFactory
+          startBlock: 11186133
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.6
+          language: wasm/assemblyscript
+          entities:
+              - PoolEntity
+              - TokenEntity
+              - OriginalCollectionEntity
+              - SyntheticCollectionEntity
+          abis:
+              - name: PoolFactory
+                file: ./abis/LeverV1Factory.json
+              - name: IERC20Minimal
+                file: ./abis/IERC20Minimal.json
+              - name: IERC721Minimal
+                file: ./abis/IERC721Minimal.json
+              - name: LeverV1Pool
+                file: ./abis/LeverV1Pool.json
+          eventHandlers:
+              - event: DeployPool(indexed address,indexed address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+                handler: handleDeployPool
+          file: ./src/poolFactory.mapping.ts
+
+    - kind: ethereum/contract
+      name: LeverV1Pool
+      network: rinkeby
+      source:
+          abi: LeverV1Pool
+          startBlock: 11186133
+      mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.6
+          language: wasm/assemblyscript
+          entities:
+              - PoolEntity
+              - DepositEntity
+              - LoanEntity
+              - RepayEntity
+              - AccountEntity
+              - EventEntity
+              - InstallmentEntity
+          abis:
+              - name: LeverV1Pool
+                file: ./abis/LeverV1Pool.json
+          eventHandlers:
+              - event: Create(indexed address,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+                handler: handleCreatePool
+              - event: Deposit(indexed address,uint256)
+                handler: handleDeposit
+              - event: Collect(indexed address,uint256)
+                handler: handleCollect
+              - event: Borrow(indexed address,uint256,uint256)
+                handler: handleBorrow
+              - event: Repay(indexed address,uint256,uint256)
+                handler: handleRepay
+              - event: Liquidate(uint256,uint256)
+                handler: handleLiquidate
+          file: ./src/leverPool.mapping.ts
