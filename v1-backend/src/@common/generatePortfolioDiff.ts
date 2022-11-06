@@ -1,8 +1,11 @@
 import { BigNumber, utils } from "ethers";
 import { Alchemy, NftExcludeFilters, NftTokenType } from "alchemy-sdk";
 import { getPrice } from "./0xClient";
+import estimateValue from "./estimateValue";
+import swapOptimizer from "./swapOptimizer";
+import sleep from "./sleep";
 
-const MIN_COMP = BigNumber.from(4); // Must be at least 4%
+const MIN_COMP = utils.parseEther("0.04"); // Must be at least 4%
 
 export type Portfolio = {
 	[key: string]: {
@@ -10,6 +13,7 @@ export type Portfolio = {
 		tokenIds?: string[];
 		balance: BigNumber;
 		value?: BigNumber;
+		ratio?: BigNumber;
 	};
 };
 
@@ -31,9 +35,17 @@ interface PreDiffEntry {
 
 export interface Difference {
 	tokenType: TokenTypeEnum;
-	balance: BigNumber;
+	delta: BigNumber;
 	action: ActionEnum;
 	price?: BigNumber;
+	address: string;
+}
+
+interface Expected {
+	tokenType: TokenTypeEnum;
+	balance: BigNumber;
+	value: BigNumber;
+	delta: BigNumber;
 }
 
 let priceMappings: { [key: string]: BigNumber } = {};
@@ -45,157 +57,162 @@ const standardizePortfolio = async (
 ): Promise<{ portfolio: Portfolio; networth: BigNumber }> => {
 	let portfolio: Portfolio = {};
 	let networth: BigNumber = BigNumber.from(0);
-	const tokenBalances = (await alchemyClient.core.getTokenBalances(account))
-		.tokenBalances;
+	const tokenBalances = (
+		await alchemyClient.core.getTokenBalances(account)
+	).tokenBalances.filter((token) => token.tokenBalance !== "0");
 
-	for (let asset of tokenBalances) {
-		try {
-			priceMappings[asset.contractAddress] = BigNumber.from(
-				await getPrice(asset.contractAddress)
+	await Promise.all(
+		tokenBalances.map(async (token) => {
+			console.log(`Processing ${token.contractAddress}`);
+			let balance: any = token.tokenBalance;
+
+			// Get metadata of token
+			const metadata = await alchemyClient.core.getTokenMetadata(
+				token.contractAddress
 			);
 
-			const value: BigNumber = priceMappings[asset.contractAddress]
-				.mul(
-					BigNumber.from(utils.parseEther(asset.tokenBalance)) //portfolio[asset.contractAddress].balance
-				)
-				.div(utils.parseEther("1"));
+			// Compute token balance in human-readable format
+			balance = balance / Math.pow(10, metadata.decimals);
+			balance = balance.toFixed(2);
 
-			console.log(`${value} ETH`);
+			try {
+				const price = await getPrice(token.contractAddress);
+				if (price === "0" || balance == 0 || token.error) {
+					return;
+				}
 
-			portfolio[asset.contractAddress] = {
-				tokenType: TokenTypeEnum.ERC20,
-				balance: utils.parseEther(asset.tokenBalance),
-				value,
-			};
+				priceMappings[token.contractAddress] = utils.parseEther(price);
 
-			networth.add(value);
-		} catch (error) {
-			console.log(asset.contractAddress);
-			console.error(error);
-		}
-	}
+				const value = estimateValue(
+					priceMappings[token.contractAddress],
+					balance
+				);
+
+				portfolio[token.contractAddress] = {
+					tokenType: TokenTypeEnum.ERC20,
+					value,
+					balance,
+				};
+
+				networth = networth.add(value);
+			} catch (error) {
+				if (error.statusCode === 400) {
+					console.error(error.message);
+				} else {
+					//return error;
+				}
+			} finally {
+				await sleep(500);
+			}
+		})
+	);
 
 	// wipe small token comp
-	for (let asset of tokenBalances) {
-		console.log(portfolio[asset.contractAddress].value);
-		// if (
-		// 	portfolio[asset.contractAddress].value.mul(100).div(networth) <
-		// 	MIN_COMP
-		// ) {
-		// 	delete portfolio[asset.contractAddress];
-		// }
-	}
+	for (let contractAddress of Object.keys(portfolio)) {
+		const ratio = utils
+			.parseUnits(portfolio[contractAddress].value.toString(), 18)
+			.div(networth);
 
-	// pagination. Maybe take most valuable NFTs and ^. idfk
-	// ^ is this really even an issue
-	// hover a fn and cmd + left click to nav to type def
-	const nfts = (
-		await alchemyClient.nft.getNftsForOwner(account, {
-			// we dont want nfts marked as spam
-			excludeFilters: [NftExcludeFilters.SPAM],
-		})
-	).ownedNfts;
-
-	for (let nft of nfts) {
-		if (nft.contract.tokenType !== NftTokenType.ERC721) {
+		if (ratio.lt(MIN_COMP)) {
+			delete portfolio[contractAddress];
 			continue;
 		}
 
-		if (!portfolio[nft.contract.address]) {
-			portfolio[nft.contract.address] = {
-				tokenType: TokenTypeEnum.ERC721,
-				tokenIds: [],
-				balance: BigNumber.from(0),
-			};
-		}
-
-		portfolio[nft.contract.address].tokenIds.push(nft.tokenId);
-		portfolio[nft.contract.address].balance.add(BigNumber.from(1));
+		portfolio[contractAddress].ratio = ratio;
 	}
 
 	return { portfolio, networth };
 };
 
+const correlatePortfolio = (
+	basePortfolio,
+	vaultPortfolio
+): { [key: string]: Expected } => {
+	let expectedPortfolio = {};
+
+	for (let tokenAddress of Object.keys(basePortfolio.portfolio)) {
+		const dataObj = {
+			tokenType: basePortfolio.portfolio[tokenAddress].tokenType,
+			// token count
+			balance: utils.formatEther(
+				BigNumber.from(
+					vaultPortfolio.networth
+						.mul(basePortfolio.portfolio[tokenAddress].ratio)
+						.div(utils.parseEther("1"))
+				)
+			),
+			// in usd
+			value: null,
+			delta: null,
+		};
+
+		dataObj.value = utils.formatEther(
+			estimateValue(
+				priceMappings[tokenAddress],
+				dataObj.balance.toString()
+			)
+		);
+
+		dataObj.delta = dataObj.value;
+
+		expectedPortfolio[tokenAddress] = { ...dataObj };
+	}
+
+	return expectedPortfolio;
+};
+
 // transform on proportion
-// minimum proporation -> jump trading must have at least x % of asset in order for us to consider
 // margin of error -> if jump street position increases or decreases within range, no action
 
+interface StandardizedPortfolio {
+	portfolio: Portfolio;
+	networth: BigNumber;
+}
+
 export default async (
-	account1: string, // account we build strategy around
-	account2: string, // vault
+	baseAddress: string, // account we build strategy around
+	vaultAddress: string, // vault
 	alchemyClient: Alchemy
-): Promise<Difference[]> => {
-	let preDiffSet: {
-		[key: string]: PreDiffEntry;
-	} = {};
-	let diffSet: Difference[] = [];
-	const account1Portfolio = await standardizePortfolio(
-		account1,
-		alchemyClient
-	);
-	const account2Portfolio = await standardizePortfolio(
-		account2,
+): Promise<any> => {
+	const account1Portfolio: StandardizedPortfolio = await standardizePortfolio(
+		baseAddress,
 		alchemyClient
 	);
 
-	// 2 things we can do here. 1) we can call it a done deal and bundle up account1 portfolio and submit that to our strategy
-	// I went ahead and implemented option 2, which - indifferent. Option 2 lays out explicit actions the contract needs to take. super robotic
+	const account2Portfolio: StandardizedPortfolio = await standardizePortfolio(
+		vaultAddress,
+		alchemyClient
+	);
 
-	// load positions
-	for (let address of Object.keys(account1Portfolio.portfolio)) {
-		preDiffSet[address] = {
-			tokenType: account1Portfolio.portfolio[address].tokenType,
-			balance: account1Portfolio.portfolio[address].balance,
-		};
-	}
+	const expectedPortfolio = correlatePortfolio(
+		account1Portfolio,
+		account2Portfolio
+	);
 
-	for (let address of Object.keys(account2Portfolio.portfolio)) {
-		// sell aaaaallllllllll
-		if (!preDiffSet[address]) {
-			diffSet.push({
-				tokenType: account2Portfolio.portfolio[address].tokenType,
-				balance: account2Portfolio.portfolio[address].balance,
-				action: ActionEnum.SELL,
-			});
+	// let x = {};
 
-			continue;
-		}
+	// for (let key of Object.keys(expectedPortfolio)) {
+	// 	x[key] = {
+	// 		balance: expectedPortfolio[key].balance.toString(),
+	// 		value: expectedPortfolio[key].value.toString(),
+	// 		delta: expectedPortfolio[key].delta.toString(),
+	// 	};
+	// }
 
-		// no change. perpect
-		if (
-			preDiffSet[address].balance.eq(
-				account2Portfolio.portfolio[address].balance
-			)
-		) {
-			continue;
-		}
+	// return x;
 
-		// must get more assets in vault
-		if (
-			preDiffSet[address].balance.gt(
-				account2Portfolio.portfolio[address].balance
-			)
-		) {
-			diffSet.push({
-				tokenType: preDiffSet[address].tokenType,
-				balance: preDiffSet[address].balance.sub(
-					account2Portfolio.portfolio[address].balance
-				),
-				action: ActionEnum.BUY,
-			});
-
-			continue;
-		}
-
-		// need to release some assets in vault /shrug
-		diffSet.push({
-			tokenType: preDiffSet[address].tokenType,
-			balance: account2Portfolio.portfolio[address].balance.sub(
-				preDiffSet[address].balance
-			),
-			action: ActionEnum.SELL,
-		});
-	}
-
-	return diffSet;
+	return swapOptimizer(
+		account2Portfolio.portfolio as any,
+		expectedPortfolio as any
+	);
 };
+
+/* 
+get portfolio of stalk account (ST) ✔️
+get portfolio of vault (V) ✔️
+
+find ratio of ST tokens, pick top ✔️
+Add ST ratio to V ✔️
+Add delta in USD ✔️
+Move V tokens not in ST ratio to ST ratio tokens
+*/
