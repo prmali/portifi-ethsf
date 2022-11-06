@@ -31,7 +31,6 @@ contract Vault is ERC4626 {
         string memory ticker
     ) ERC4626(ERC20(baseAsset), name, ticker) {
         factory = msg.sender;
-
     }
 
     function approve(

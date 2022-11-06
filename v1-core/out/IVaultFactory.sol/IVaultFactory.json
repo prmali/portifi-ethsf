@@ -124,20 +124,19 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IVaultFactory.sol",
-    "id": 26290,
+    "id": 26794,
     "exportedSymbols": {
       "IVaultFactory": [
-        26289
+        26793
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "39:233:24",
+    "src": "39:233:27",
     "nodes": [
       {
-        "id": 26277,
+        "id": 26781,
         "nodeType": "PragmaDirective",
-        "src": "39:24:24",
-        "nodes": [],
+        "src": "39:24:27",
         "literals": [
           "solidity",
           "^",
@@ -146,34 +145,33 @@
         ]
       },
       {
-        "id": 26289,
+        "id": 26793,
         "nodeType": "ContractDefinition",
-        "src": "65:206:24",
+        "src": "65:206:27",
         "nodes": [
           {
-            "id": 26288,
+            "id": 26792,
             "nodeType": "FunctionDefinition",
-            "src": "135:134:24",
-            "nodes": [],
+            "src": "135:134:27",
             "functionSelector": "515d61ec",
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "createVault",
-            "nameLocation": "144:11:24",
+            "nameLocation": "144:11:27",
             "parameters": {
-              "id": 26284,
+              "id": 26788,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 26279,
+                  "id": 26783,
                   "mutability": "mutable",
                   "name": "asset",
-                  "nameLocation": "173:5:24",
+                  "nameLocation": "173:5:27",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26288,
-                  "src": "165:13:24",
+                  "scope": 26792,
+                  "src": "165:13:27",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -181,10 +179,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 26278,
+                    "id": 26782,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "165:7:24",
+                    "src": "165:7:27",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -195,13 +193,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 26281,
+                  "id": 26785,
                   "mutability": "mutable",
                   "name": "name",
-                  "nameLocation": "202:4:24",
+                  "nameLocation": "202:4:27",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26288,
-                  "src": "188:18:24",
+                  "scope": 26792,
+                  "src": "188:18:27",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -209,10 +207,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 26280,
+                    "id": 26784,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "188:6:24",
+                    "src": "188:6:27",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -222,13 +220,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 26283,
+                  "id": 26787,
                   "mutability": "mutable",
                   "name": "symbol",
-                  "nameLocation": "230:6:24",
+                  "nameLocation": "230:6:27",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26288,
-                  "src": "216:20:24",
+                  "scope": 26792,
+                  "src": "216:20:27",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -236,10 +234,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 26282,
+                    "id": 26786,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "216:6:24",
+                    "src": "216:6:27",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -248,21 +246,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "155:87:24"
+              "src": "155:87:27"
             },
             "returnParameters": {
-              "id": 26287,
+              "id": 26791,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 26286,
+                  "id": 26790,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26288,
-                  "src": "260:7:24",
+                  "scope": 26792,
+                  "src": "260:7:27",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -270,10 +268,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 26285,
+                    "id": 26789,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "260:7:24",
+                    "src": "260:7:27",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -283,9 +281,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "259:9:24"
+              "src": "259:9:27"
             },
-            "scope": 26289,
+            "scope": 26793,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -298,15 +296,15 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          26289
+          26793
         ],
         "name": "IVaultFactory",
-        "nameLocation": "75:13:24",
-        "scope": 26290,
+        "nameLocation": "75:13:27",
+        "scope": 26794,
         "usedErrors": []
       }
     ],
     "license": "UNLICENSED"
   },
-  "id": 24
+  "id": 27
 }

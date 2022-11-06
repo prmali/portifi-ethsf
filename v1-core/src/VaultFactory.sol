@@ -9,17 +9,13 @@ contract VaultFactory is IVaultFactory {
 	Vault public vault;
 	mapping (address => address) public vaultsToStrategies;
 
-	constructor(address _registry) {
-		registry = _registry;
-	}
-
+	constructor() {}
 
 	function createVault(
 		address _asset,
 		string memory _name,
 		string memory _symbol
 	) external returns(address ) {
-		require(msg.sender == registry, "Caller must be Registry Contract");
 		vault = new Vault(_asset, _name, _symbol);
 		return address(vault);
 	}
