@@ -66,7 +66,6 @@ export const lambdaHandler = async (event, context) => {
         alchemyClient
     );
 
-    //return await getProtocols();
     // get vault mapping to strat n create contract instance
     const contract = new ethers.Contract(vaultAddress, 'abi', wallet);
     // invoke strat
@@ -85,19 +84,6 @@ export const lambdaHandler = async (event, context) => {
     await executeTxn.wait();
     console.log('[PROCESSED TXN]', executeTxn);
 };
-
-const test = async () => {
-    //   const sorted = prices
-    //     .sort((p1, p2): any => {
-    //       if (p1['mcap'] < p2['mcap']) return 1;
-    //       else if (p1['mcap'] == p2['mcap']) return 0;
-    //       else return -1;
-    //     })
-    //     .slice(0, 10);
-    //   console.log(sorted);
-    //   console.log(sorted.length);
-};
-test();
 
 const getSwapAmounts = async (
     historical,
