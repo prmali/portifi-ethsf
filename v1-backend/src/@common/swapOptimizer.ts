@@ -6,6 +6,7 @@ interface Position {
 	balance: BigNumber;
 	value: BigNumber;
 	delta: BigNumber;
+	price: BigNumber;
 }
 
 export interface SwapBook {
@@ -33,7 +34,7 @@ export default (
 			continue;
 		}
 
-		if (actual[address].balance === expected[address].balance) {
+		if (actual[address].balance.eq(expected[address].balance)) {
 			blacklistedMovers.add(address);
 			delete expected[address];
 		}
@@ -42,7 +43,7 @@ export default (
 		// change delta to reflect updates
 		// delta equals remaining tokens times cost per token
 
-		if (actual[address].balance > expected[address].balance) {
+		if (actual[address].balance.gt(expected[address].balance)) {
 			actual[address].balance = actual[address].balance.sub(
 				expected[address].balance
 			);
@@ -62,7 +63,7 @@ export default (
 			continue;
 		}
 
-		if (expected[address].balance > actual[address].balance) {
+		if (expected[address].balance.gt(actual[address].balance)) {
 			expected[address].balance = expected[address].balance.sub(
 				actual[address].balance
 			);
@@ -95,26 +96,34 @@ export default (
 		iExpected < iterableExpected.length
 	) {
 		const actualAsset = iterableActual[iActual];
-		const aPricePerToken = utils
-			.parseEther(actualAsset.value.toString())
-			.div(utils.parseEther(actualAsset.balance.toString()));
+		console.log("actualAsset Value:", utils.formatEther(actualAsset.value));
+		// const aPricePerToken = utils
+		// 	.parseEther(actualAsset.value.toString())
+		// 	.div(utils.parseEther(actualAsset.balance.toString()));
+		const aPricePerToken = actualAsset.price;
 		const expectedAsset = iterableExpected[iExpected];
 		// const ePricePerToken = utils
 		// 	.parseEther(expectedAsset.value.toString())
 		// 	.div(utils.parseEther(expectedAsset.balance.toString()));
 
-		if (actualAsset.value >= expectedAsset.delta) {
+		if (actualAsset.value.gte(expectedAsset.delta)) {
 			const entry = {
 				from: actualAsset.address,
 				to: expectedAsset.address,
 				amount: utils
 					.parseEther(expectedAsset.delta.toString())
-					.div(utils.parseEther(aPricePerToken.toString())),
+					.div(aPricePerToken),
 			};
 			swapBook.push(entry);
 
-			actualAsset.balance = actualAsset.balance.sub(entry.amount);
-			actualAsset.value = actualAsset.value.sub(expectedAsset.value);
+			console.log(
+				actualAsset.balance.toString(),
+				utils.formatEther(entry.amount)
+			);
+			actualAsset.balance = utils
+				.parseEther(actualAsset.balance.toString())
+				.sub(utils.parseEther(utils.formatEther(entry.amount)));
+			actualAsset.value = actualAsset.value.sub(expectedAsset.delta);
 
 			expectedAsset.balance = BigNumber.from(0);
 			expectedAsset.value = BigNumber.from(0);
@@ -147,6 +156,7 @@ export default (
 	}
 
 	if (iActual < iterableActual.length) {
+		console.log("extra liquidity");
 		// create WETH swap
 	}
 

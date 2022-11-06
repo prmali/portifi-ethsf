@@ -14,6 +14,7 @@ export type Portfolio = {
 		balance: BigNumber;
 		value?: BigNumber;
 		ratio?: BigNumber;
+		price?: BigNumber;
 	};
 };
 
@@ -81,7 +82,7 @@ const standardizePortfolio = async (
 					return;
 				}
 
-				priceMappings[token.contractAddress] = utils.parseEther(price);
+				priceMappings[token.contractAddress] = utils.parseEther(price); // formatEthers to get dollar value
 
 				const value = estimateValue(
 					priceMappings[token.contractAddress],
@@ -92,6 +93,7 @@ const standardizePortfolio = async (
 					tokenType: TokenTypeEnum.ERC20,
 					value,
 					balance,
+					price: priceMappings[token.contractAddress],
 				};
 
 				networth = networth.add(value);
@@ -110,7 +112,7 @@ const standardizePortfolio = async (
 	// wipe small token comp
 	for (let contractAddress of Object.keys(portfolio)) {
 		const ratio = utils
-			.parseUnits(portfolio[contractAddress].value.toString(), 18)
+			.parseEther(portfolio[contractAddress].value.toString())
 			.div(networth);
 
 		if (ratio.lt(MIN_COMP)) {
@@ -131,15 +133,23 @@ const correlatePortfolio = (
 	let expectedPortfolio = {};
 
 	for (let tokenAddress of Object.keys(basePortfolio.portfolio)) {
+		console.log(
+			vaultPortfolio.networth.toString(),
+			utils.formatEther(
+				basePortfolio.portfolio[tokenAddress].ratio.toString()
+			) + "%",
+			tokenAddress
+		);
 		const dataObj = {
 			tokenType: basePortfolio.portfolio[tokenAddress].tokenType,
 			// token count
-			balance: vaultPortfolio.networth.mul(
-				basePortfolio.portfolio[tokenAddress].ratio
-			),
+			balance: vaultPortfolio.networth
+				.mul(basePortfolio.portfolio[tokenAddress].ratio)
+				.div(utils.parseEther("1")),
 			// in usd
 			value: null,
 			delta: null,
+			price: priceMappings[tokenAddress],
 		};
 
 		dataObj.value = estimateValue(
@@ -182,11 +192,12 @@ export default async (
 
 	// let x = [];
 
-	// for (let position of Object.keys(expectedPortfolio)) {
+	// for (let address of Object.keys(expectedPortfolio)) {
 	// 	x.push({
-	// 		balance: expectedPortfolio[position].balance.toString(),
-	// 		value: expectedPortfolio[position].value.toString(),
-	// 		delta: expectedPortfolio[position].delta.toString(),
+	// 		address: address,
+	// 		balance: utils.formatEther(expectedPortfolio[address].balance),
+	// 		value: utils.formatEther(expectedPortfolio[address].value),
+	// 		delta: utils.formatEther(expectedPortfolio[address].delta),
 	// 	});
 	// }
 
