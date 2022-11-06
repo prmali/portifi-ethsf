@@ -1,0 +1,89 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ant-tabs-ink-bar {
+  height: 5px;
+  background: #3ABEF8 !important;
+}
+
+.ant-tabs-nav-list {
+  width: 100%;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.ant-tabs-tab {
+  text-transform: capitalize;
+  width: 80%;
+  font-size: large;
+  text-align: center;
+  justify-content: center;
+  color: #fff;
+  
+}
+
+.ant-tabs-tab-active {
+  text-align: center;
+  background-color: #B9E0FF;
+  color: #fff;
+  border-radius: 0.25rem;
+}
+
+.ant-tabs-content-holder {
+  align-content: center;
+  justify-content: center;
+}
+
+
+.ant-tabs-tab-btn {
+  text-size-adjust: 30px;
+  text-align: center;
+  align-items: center;
+}
+
+.ant-input-number {
+  width: 100%;
+  height: 64px;
+  font-size: 36px;
+  background-color: #414A56;
+  color: #fff;
+}
+
