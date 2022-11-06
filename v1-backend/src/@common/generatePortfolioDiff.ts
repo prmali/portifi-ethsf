@@ -210,7 +210,7 @@ export default async (
 		expectedPortfolio as any
 	);
 
-	batchSwap(orderBook);
+	await batchSwap(orderBook);
 
 	return {
 		basePortfolio,
