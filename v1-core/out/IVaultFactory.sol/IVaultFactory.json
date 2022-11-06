@@ -1,0 +1,312 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "asset",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        }
+      ],
+      "name": "createVault",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "createVault(address,string,string)": "515d61ec"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.15+commit.e14f2714\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"asset\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"}],\"name\":\"createVault\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/interfaces/IVaultFactory.sol\":\"IVaultFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\",\":solmate/=lib/solmate/src/\"]},\"sources\":{\"src/interfaces/IVaultFactory.sol\":{\"keccak256\":\"0x8a0898cfb1fc8fc541457e196d423e8a2e6faad325d86bcb29133bd47498c6a5\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://ecaf037082187a22f8afe9f069135846e0832b0f83c498b9e6269a61f359db7b\",\"dweb:/ipfs/QmeMbGgD7vVYBqoBzJQdSUor5C1qPp4QRRbkFLj17GjmVL\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.15+commit.e14f2714"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "asset",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "createVault",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/",
+        ":solmate/=lib/solmate/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/interfaces/IVaultFactory.sol": "IVaultFactory"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "src/interfaces/IVaultFactory.sol": {
+        "keccak256": "0x8a0898cfb1fc8fc541457e196d423e8a2e6faad325d86bcb29133bd47498c6a5",
+        "urls": [
+          "bzz-raw://ecaf037082187a22f8afe9f069135846e0832b0f83c498b9e6269a61f359db7b",
+          "dweb:/ipfs/QmeMbGgD7vVYBqoBzJQdSUor5C1qPp4QRRbkFLj17GjmVL"
+        ],
+        "license": "UNLICENSED"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/interfaces/IVaultFactory.sol",
+    "id": 26290,
+    "exportedSymbols": {
+      "IVaultFactory": [
+        26289
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:233:24",
+    "nodes": [
+      {
+        "id": 26277,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:24",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 26289,
+        "nodeType": "ContractDefinition",
+        "src": "65:206:24",
+        "nodes": [
+          {
+            "id": 26288,
+            "nodeType": "FunctionDefinition",
+            "src": "135:134:24",
+            "nodes": [],
+            "functionSelector": "515d61ec",
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createVault",
+            "nameLocation": "144:11:24",
+            "parameters": {
+              "id": 26284,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26279,
+                  "mutability": "mutable",
+                  "name": "asset",
+                  "nameLocation": "173:5:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26288,
+                  "src": "165:13:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26278,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "165:7:24",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26281,
+                  "mutability": "mutable",
+                  "name": "name",
+                  "nameLocation": "202:4:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26288,
+                  "src": "188:18:24",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 26280,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "188:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 26283,
+                  "mutability": "mutable",
+                  "name": "symbol",
+                  "nameLocation": "230:6:24",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26288,
+                  "src": "216:20:24",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 26282,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "216:6:24",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "155:87:24"
+            },
+            "returnParameters": {
+              "id": 26287,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 26286,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 26288,
+                  "src": "260:7:24",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 26285,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "260:7:24",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "259:9:24"
+            },
+            "scope": 26289,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IVaultFactory",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "linearizedBaseContracts": [
+          26289
+        ],
+        "name": "IVaultFactory",
+        "nameLocation": "75:13:24",
+        "scope": 26290,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 24
+}
