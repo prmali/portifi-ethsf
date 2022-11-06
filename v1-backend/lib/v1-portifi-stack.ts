@@ -31,7 +31,7 @@ export class V1PortifiStack extends Stack {
 				handler: "lambdaHandler",
 				functionName: "DEV-Portifi-MeanReversion",
 				memorySize: 512,
-				timeout: Duration.minutes(2),
+				timeout: Duration.minutes(5),
 				runtime: Runtime.NODEJS_16_X,
 				bundling,
 			}
@@ -45,7 +45,7 @@ export class V1PortifiStack extends Stack {
 				handler: "lambdaHandler",
 				functionName: "DEV-Portifi-SingleStalk",
 				memorySize: 512,
-				timeout: Duration.minutes(2),
+				timeout: Duration.minutes(5),
 				runtime: Runtime.NODEJS_16_X,
 				bundling,
 			}

@@ -30,17 +30,7 @@ export const lambdaHandler = async (event, context) => {
 	// const balances = await alchemyClient.core.getTokenBalances(address);
 	// return balances;
 
-	const diffSet = await generatePortfolioDiff(
-		address,
-		vaultAddress,
-		alchemyClient
-	);
-
-	return diffSet;
-
-	if (diffSet.length === 0) {
-		return;
-	}
+	return await generatePortfolioDiff(address, vaultAddress, alchemyClient);
 
 	// // get vault mapping to strat n create contract instance
 	// const contract = new ethers.Contract(vaultAddress, "abi", wallet);
