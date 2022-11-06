@@ -1,0 +1,5 @@
+.step-success::before {
+	/* background: transparent !important; */
+	width: 4px !important;
+	/* border: 2px dashed; */
+}
