@@ -417,7 +417,72 @@ export default function Example() {
       </div>
     </div>
   </div>
-</div>
+  {/*Activity Section*/}
+  <div className="bg-gradient-to-r from-black to-indigo-900 mx-auto h-screen py-10 px-4">
+    <div>
+      <div className="w-5/6 mx-auto text-white text-xl font-bold">
+        VAULT ACTIVITY
+      </div>
+      <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
+        <div>
+          Action
+        </div>
+        <div>
+          Contract
+        </div>
+        <div>
+          Quantity
+        </div>
+        <div>
+          Tokens
+        </div>
+      </div>
+      <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
+        <div>
+          Action
+        </div>
+        <div>
+          Contract
+        </div>
+        <div>
+          Quantity
+        </div>
+        <div>
+          Tokens
+        </div>
+      </div>
+      <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
+        <div>
+          Action
+        </div>
+        <div>
+          Contract
+        </div>
+        <div>
+          Quantity
+        </div>
+        <div>
+          Tokens
+        </div>
+      </div>
+      <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
+        <div>
+          Action
+        </div>
+        <div>
+          Contract
+        </div>
+        <div>
+          Quantity
+        </div>
+        <div>
+          Tokens
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  </div>
   </>
   )
 }
