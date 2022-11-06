@@ -1,3 +1,5 @@
+import "source-map-support/register";
+
 import { Network } from "alchemy-sdk";
 import { ethers } from "ethers";
 
@@ -6,7 +8,7 @@ import EthersClient from "../@common/EthersClient";
 import generatePortfolioDiff from "../@common/generatePortfolioDiff";
 import getSecrets, { Secrets } from "../@common/getSecrets";
 
-const address = "0xbA842b7DA417Ba762D75e8F99e11c2980a8F8051";
+const address = "0x22aa3f5d1daffe1a9df298e79a0cf2f98c1b92ff";
 const vaultAddress = "0xbA842b7DA417Ba762D75e8F99e11c2980a8F8051";
 
 export const lambdaHandler = async (event, context) => {
@@ -34,24 +36,26 @@ export const lambdaHandler = async (event, context) => {
 		alchemyClient
 	);
 
+	return diffSet;
+
 	if (diffSet.length === 0) {
 		return;
 	}
 
-	// get vault mapping to strat n create contract instance
-	const contract = new ethers.Contract(vaultAddress, "abi", wallet);
-	// invoke strat
-	const executeTxn = await contract.execute(
-		ethers.utils.AbiCoder.prototype.encode(
-			["tuple(string, uint256, string)[]"],
-			[diffSet]
-		),
-		{
-			// value, gasPrice
-		}
-	);
+	// // get vault mapping to strat n create contract instance
+	// const contract = new ethers.Contract(vaultAddress, "abi", wallet);
+	// // invoke strat
+	// const executeTxn = await contract.execute(
+	// 	ethers.utils.AbiCoder.prototype.encode(
+	// 		["tuple(string, uint256, string)[]"],
+	// 		[diffSet]
+	// 	),
+	// 	{
+	// 		// value, gasPrice
+	// 	}
+	// );
 
-	console.log("[SUBMITTED TXN]", executeTxn);
-	await executeTxn.wait();
-	console.log("[PROCESSED TXN]", executeTxn);
+	// console.log("[SUBMITTED TXN]", executeTxn);
+	// await executeTxn.wait();
+	// console.log("[PROCESSED TXN]", executeTxn);
 };
