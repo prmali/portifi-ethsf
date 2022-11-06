@@ -3,13 +3,12 @@ import {
   VAULT_CONTRACT_ABI,
   VAULT_CONTRACT_ADDRESS,
 } from "./constants";
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Chart from 'react-apexcharts'
 import { Tabs, InputNumber } from 'antd';
 import './App.css';
-
 
 const onChange = (value) => {
   console.log('changed', value);
@@ -295,14 +294,14 @@ export default function Example() {
                 </div>
                 
                 <br></br>
-                <progress className="progress progress-info bg-gray-600 w-5/6 h-4 my-3" value="80" max="100"></progress>
+                <progress className="progress progress-info bg-gray-600 w-5/6 h-4 my-3" value={"80"} max="100"></progress>
                 <br></br>
                 <div className="flex col-2">
                   <div className=" text-lg mr-auto">
                     Max Vault Capacity
                   </div>
                   <div className="flex">
-                    5,000.00 wETH
+                    20,000,000.00 USDC
                   </div>
                 </div>
               </div>
@@ -425,58 +424,72 @@ export default function Example() {
       </div>
       <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
         <div>
-          Action
+          Buy
         </div>
         <div>
           Contract
         </div>
         <div>
-          Quantity
+          400
         </div>
         <div>
-          Tokens
+          ETH
         </div>
       </div>
       <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
         <div>
-          Action
+          Buy
         </div>
         <div>
           Contract
         </div>
         <div>
-          Quantity
+          400
         </div>
         <div>
-          Tokens
+          ETH
         </div>
       </div>
       <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
         <div>
-          Action
+          Buy
         </div>
         <div>
           Contract
         </div>
         <div>
-          Quantity
+          250
         </div>
         <div>
-          Tokens
+          USDC
         </div>
       </div>
       <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
         <div>
-          Action
+          Sell
         </div>
         <div>
           Contract
         </div>
         <div>
-          Quantity
+          200
         </div>
         <div>
-          Tokens
+          USDC
+        </div>
+      </div>
+      <div className="container-lg rounded-md p-10 mx-auto my-4 bg-gray-900 text-white w-5/6 h-1/3 flex flex-row gap-72 p-20">
+        <div>
+          Sell
+        </div>
+        <div>
+          Contract
+        </div>
+        <div>
+          300
+        </div>
+        <div>
+          USDC
         </div>
       </div>
       
