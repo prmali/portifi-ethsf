@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider as UrqlProvider } from "urql";
-import { ToastContainer } from "react-toastify";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
 	getDefaultWallets,
@@ -15,8 +14,15 @@ import { publicProvider } from "wagmi/providers/public";
 
 import "./index.css";
 import "./daisy.css";
-import App from "./App";
 import UrqlClient from "./utils/UrqlClient";
+
+import { VAULT_CONTRACT_ABI, VAULT_CONTRACT_ADDRESS } from "./constants";
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import Chart from "react-apexcharts";
+import { Tabs, InputNumber } from "antd";
+import "./App.css";
 
 const { chains, provider } = configureChains(
 	[chain.mainnet],
@@ -33,13 +39,6 @@ const wagmiClient = createClient({
 	connectors,
 	provider,
 });
-import { VAULT_CONTRACT_ABI, VAULT_CONTRACT_ADDRESS } from "./constants";
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Chart from "react-apexcharts";
-import { Tabs, InputNumber } from "antd";
-import "./App.css";
 
 const onChange = (value) => {
 	console.log("changed", value);
@@ -589,7 +588,6 @@ export default function Example() {
 							</div>
 						</div>
 					</div>
-					<ToastContainer />
 				</UrqlProvider>
 			</RainbowKitProvider>
 		</WagmiConfig>
