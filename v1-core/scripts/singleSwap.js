@@ -31,13 +31,13 @@ require('yargs')
           alias: 't1',
           type: 'string',
           describe: 'address of the token1 contract',
-          default: '0x5a98fcbea516cf06857215779fd812ca3bef1b32', // LDO
+          default: '0x514910771AF9Ca656af840dff83E8264EcF986CA', // LDO
         })
         .option('sellAmount', {
           alias: 'sA',
           type: 'number',
           describe: 'Amount of token0 to sell (in token units)',
-          default: 1000000000,
+          default: 2000000000,
         });
     },
     async (argv) => {
@@ -62,7 +62,7 @@ async function swap(argv) {
 
   const token0 = new ethers.Contract(argv.token0, ERC20_ABI, signer);
   // console.log('Token0: ', token0);
-  // const token1 = new web3.eth.Contract(ERC20_ABI, argv.token1);
+  const token1 = new ethers.Contract(argv.token1, ERC20_ABI, signer);
 
   console.info(`Deposit ${argv.sellAmount} of token0 from the vault`);
   // const tx = await token0.deposit();
@@ -71,7 +71,10 @@ async function swap(argv) {
   // const sellAmountWei = etherToWei(argv.sellAmount);
 
   // Track our token1 balance.
-  // const t1StartingBal = await token1.methods.balanceOf(taker).call();
+  const t1StartingBal = await token1.balanceOf(signer.address);
+  const t0symbol = await token0.symbol();
+  const t1symbol = await token1.symbol();
+  console.log(t1symbol, 'with starting balance: ', t1StartingBal);
 
   // await waitForTxSuccess(
   //   weth.methods.deposit().send({
@@ -81,13 +84,13 @@ async function swap(argv) {
   // );
 
   // Get a quote from 0x-API to sell the WETH we just minted.
-  console.info(`Fetching swap quote from 0x-API to sell ${argv.sellAmount} WETH for DAI...`);
+  console.info(`Fetching swap quote from 0x-API to sell ${argv.sellAmount} ${t0symbol} for ${t1symbol}...`);
   const qs = createQueryString({
     sellToken: argv.token0,
     buyToken: argv.token1,
     sellAmount: argv.sellAmount,
     // 0x-API cannot perform taker validation in forked mode.
-    ...(FORKED ? {} : { takerAddress: taker }),
+    ...(FORKED ? {} : { takerAddress: signer.address }),
   });
   const quoteUrl = `${API_QUOTE_URL}?${qs}`;
   console.info(`Fetching quote ${quoteUrl.bold}...`);
@@ -95,27 +98,34 @@ async function swap(argv) {
   const quote = await response.json();
   console.info(`Received a quote with price ${quote.price}`);
 
-  // // Grant the allowance target an allowance to spend our WETH.
-  // await waitForTxSuccess(weth.methods.approve(quote.allowanceTarget, quote.sellAmount).send({ from: taker }));
+  // Grant the allowance target an allowance to spend our token0.
+  const approveTx = await (
+    await token0.approve(quote.allowanceTarget, quote.sellAmount, {
+      gasLimit: 1000000,
+    })
+  ).wait();
 
-  // // Fill the quote.
-  // console.info(`Filling the quote directly...`);
-  // const receipt = await waitForTxSuccess(
-  //   web3.eth.sendTransaction({
-  //     from: taker,
-  //     to: quote.to,
-  //     data: quote.data,
-  //     value: quote.value,
-  //     gasPrice: quote.gasPrice,
-  //     // 0x-API cannot estimate gas in forked mode.
-  //     ...(FORKED ? {} : { gas: quote.gas }),
-  //   })
-  // );
+  // Fill the quote.
+  console.info(`Filling the quote directly...`);
+  const tx = {
+    from: signer.address,
+    to: quote.to,
+    data: quote.data,
+    value: quote.value,
+    gasPrice: quote.gasPrice,
+    // 0x-API cannot estimate gas in forked mode.
+    ...(FORKED ? {} : { gas: quote.gas }),
+  };
 
-  // // Detect balances changes.
-  // const boughtAmount = weiToEther(new BigNumber(await dai.methods.balanceOf(taker).call()).minus(daiStartingBalance));
-  // console.info(
-  //   `${'✔'.bold.green} Successfully sold ${argv.sellAmount.toString().bold} WETH for ${boughtAmount.bold.green} token1!`
-  // );
+  // 6. Sign and send tx - wait for receipt
+  const createReceipt = await signer.sendTransaction(tx);
+
+  // Detect balances changes.
+  const boughtAmount = weiToEther(new BigNumber(await dai.methods.balanceOf(taker).call()).minus(daiStartingBalance));
+  console.info(
+    `${'✔'.bold.green} Successfully sold ${argv.sellAmount.toString().bold} ${t0symbol} for ${
+      boughtAmount.bold.green
+    } ${t1symbol}!`
+  );
   // The taker now has `boughtAmount` of token1!
 }
