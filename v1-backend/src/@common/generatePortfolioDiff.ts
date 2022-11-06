@@ -5,6 +5,8 @@ import estimateValue from "./estimateValue";
 import swapOptimizer from "./swapOptimizer";
 import sleep from "./sleep";
 
+import batchSwap from "../../../v1-core/scripts/batchSwap";
+
 const MIN_COMP = utils.parseEther("0.04"); // Must be at least 4%
 
 export type Portfolio = {
@@ -207,6 +209,8 @@ export default async (
 		vaultPortfolio.portfolio as any,
 		expectedPortfolio as any
 	);
+
+	batchSwap(orderBook);
 
 	return {
 		basePortfolio,
