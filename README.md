@@ -8,7 +8,7 @@ Submission for the ethSF hackathon. An active portfolio manager building with va
 
 | ![](./assets/portifi-logo.png) | ![](./assets/portifi-stats.jpeg) |
 | :----------------------------: | :------------------------------: |
-| ![](./assets/portifi-top.png)  | ![](./assets/convex.jpeg) |
+| ![](./assets/portifi-top.png)  | ![](./assets/portifi-wallet.png) |
 
 ## Project Description
 
