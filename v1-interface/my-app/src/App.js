@@ -10,8 +10,8 @@ const onChange = (value) => {
   console.log('changed', value);
 };
 const items = [
-  { label: 'Withdraw', key: 'withdraw', children: 'Content 1' }, // remember to pass the key prop
-  { label: 'Deposit', key: 'deposit', children: 'Content 2' }
+  { label: 'WITHDRAW', key: 'withdraw', children: 'Content 1' }, // remember to pass the key prop
+  { label: 'DEPOSIT', key: 'deposit', children: 'Content 2' }
 ];
 
 const user = {
@@ -29,11 +29,11 @@ const navigation = [
 ]
 
 const features = [
-  { name: 'VAULT RECEIVES DEPOSITS', description: 'The vault receives rETH from depositors and invests 100% of its rETH balance in its weekly options strategy.' },
+  { name: 'VAULT RECEIVES DEPOSITS', description: 'The vault receives wETH from depositors and invests 100% of its wETH balance in its weekly options strategy.' },
   { name: 'ALGORITHMIC STRIKE SELECTION', description: 'The vault algorithmically selects the optimal strike price for the ETH call options.' },
-  { name: 'VAULT MINTS OPTIONS', description: 'Every Friday at 11am UTC, the vault mints European ETH call options by depositing its rETH balance as collateral in an Opyn vault. The vault sets the strike price to the value determined by its selection algorithm and the expiry date to the following Friday. In return, the vault receives oTokens from the Opyn vault, each of which represent an ETH call option.' },
+  { name: 'VAULT MINTS OPTIONS', description: 'Every Friday at 11am UTC, the vault mints European ETH call options by depositing its wETH balance as collateral in an Opyn vault. The vault sets the strike price to the value determined by its selection algorithm and the expiry date to the following Friday. In return, the vault receives oTokens from the Opyn vault, each of which represent an ETH call option.' },
   { name: 'VAULT SELLS OPTIONS VIA GNOSIS AUCTION', description: 'The vault sells the newly minted options via a Gnosis batch auction. The vault first sets a minimum price for the options and then opens up bidding to anyone in the world. Participants whose bid is greater than or equal to the final clearing price receive the auctioned oTokens.' },
-  { name: 'VAULT COLLECTS YIELDS', description: 'The rETH earned from the Gnosis Auction is collected by the vault and represents the yield on this strategy.' },
+  { name: 'VAULT COLLECTS YIELDS', description: 'The wETH earned from the Gnosis Auction is collected by the vault and represents the yield on this strategy.' },
   { name: 'OPTIONS EXPIRE OTM', description: 'At expiry, if the strike price is higher than the market price of ETH, the options expire out-of-the-money. In this situation the oTokens held by the option buyers expire worthless.' },
 ]
 
@@ -43,20 +43,39 @@ const userNavigation = [
   { name: 'Sign out', href: '#' },
 ]
 
+/*Bar Graph*/
 const options = {
   chart: {
     id: "basic-bar"
   },
   xaxis: {
-    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+    categories: ['Oct 31', 'Nov 1', 'Nov 2', 'Nov 3', 'Nov 4', 'Nov 5', 'Nov 6', 'Nov 7']
   }
 };
 const series = [
   {
-    name: "series-1",
-    data: [30, 40, 45, 50, 49, 60, 70, 91]
+    name: "Vault Balance",
+    data: [20000, 19000, 22000, 28000, 33000, 27000, 29000, 34000],
+    theme: {
+      monochrome: {
+        enabled: true,
+        color: '#255aee',
+        shadeTo: 'light',
+        shadeIntensity: 0.65
+      }
+    }
+   
   }
 ]
+
+/*Donut Graph*/
+const options2 = {
+  labels: ['BTC', 'ETH', 'MATIC', 'AVAX',],
+  colors: ['#F7931A', '#5E78DE', '#7E43DA', '#DC3E3E',]
+};
+const series2 = [44, 55, 41, 17,];
+const labels2 = ['BTC', 'ETH', 'MATIC', 'AVAX',];
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -236,7 +255,7 @@ export default function Example() {
 
               {/*Strategy Title*/}
               <div className="container-sm text-6xl py-4">
-                T-RETH-C
+                WH4LE-W4TCHING
               </div>
               
 
@@ -249,7 +268,7 @@ export default function Example() {
                     Current Vault Deposits
                   </div>
                   <div className="space-x-reverse">
-                    626.42 RETH
+                    626.42 wETH
                   </div>
                 </div>
                 
@@ -261,7 +280,7 @@ export default function Example() {
                     Max Vault Capacity
                   </div>
                   <div className="flex">
-                    5,000.00 RETH
+                    5,000.00 wETH
                   </div>
                 </div>
               </div>
@@ -287,32 +306,40 @@ export default function Example() {
           
           
           {/*Deposit and Withdraw (check the constants at the top to edit contents of tabs)*/}
-          <div className="flex flex-row rounded-xl m-auto w-5/6 h-screen my-0 items-center gap-y-16 gap-x-8 mx-10 sm:px-6 sm:py-32 items-center justify-center">
+          <div className="flex flex-row rounded-xl m-auto w-2/3 h-screen my-0 items-center gap-y-16 gap-x-8 mx-10 sm:px-6 sm:py-32 items-center justify-center">
             <Tabs className="text-white content-center place-content-center justify-self-center bg-gray-900 border-4 border-cyan-400 backdrop-opacity-70 bg-blend-soft-light rounded-md w-full h-full">
               
               {/*Deposit Function*/}
-              <Tabs.TabPane className="text-xl text-white w-full" tab="Deposit" key="deposit">
+              <Tabs.TabPane className="text-xl text-white w-full content-center px-10" tab="DEPOSIT" key="deposit">
               <div className="d-flex flex-column p-4 w-100">
                 <div className="font-bold">AMOUNT (ETH)</div>
-                  <div class="sc-iemWCZ ffIUWY mb-2">
-                  <InputNumber className="" min={1} max={10000} defaultValue={3} onChange={onChange} />
+                  <div class="my-4 w-full">
+                    <InputNumber className="w-5/6" min={1} max={10000} defaultValue={3} onChange={onChange} />
                   </div>
-                <div className="text-lg">
-                  <span className="sc-fFSPTT gtKdvQ">Wallet Balance </span>
-                  <span className="text-lg">0 ETH</span>
+                <div className="flex col-2">
+                  <div className="text-lg mr-auto">Wallet Balance </div>
+                  <div className="text-lg space-x-reverse">0 ETH</div>
                 </div>
-                <button type="button" class="sc-lmgQwP sc-ezzafa hpRDUw dvHFX mt-4 btn py-3 mb-0">Connect Wallet</button>
+                <button type="button" class="w-full mt-4 btn py-3 mb-0 hover:bg-white hover:text-cyan-500">Connect Wallet</button>
+                <div className="w-full mt-4 btn py-3 mb-0 hover:bg-white hover:text-cyan-500">
+                    <a>CONTRACT: 0XA1DA...5EDF</a>
+                </div>
               </div>
               </Tabs.TabPane>
             
             
             {/*Withdraw Function*/}
-              <Tabs.TabPane tab="Withdraw" key="withdraw">
-                <div class=" text-white d-flex flex-column p-4 w-100">
+              <Tabs.TabPane className="text-xl text-white w-full content-center px-10" tab="WITHDRAW" key="withdraw">
+                <div class=" text-white d-flex flex-column p-4 w-100 content-center justify-center">
                   <div>
                     <div className="text-xl font-bold">AMOUNT (wETH)</div>
-                    <div class="sc-iemWCZ ffIUWY mb-2"><InputNumber min={1} max={10000} defaultValue={3} onChange={onChange} /></div>
-                    <button type="button" class="sc-lmgQwP sc-ezzafa hpRDUw dvHFX mt-4 btn py-3 mb-0">Connect Wallet</button>
+                    <div class="my-4 w-full">
+                      <InputNumber min={1} max={10000} defaultValue={3} onChange={onChange} />
+                    </div>
+                    <button type="button" className="w-full mt-4 btn py-3 mb-0 hover:bg-white hover:text-cyan-500">Connect Wallet</button>
+                  </div>
+                  <div className="w-full mt-4 btn py-3 mb-0 hover:bg-white hover:text-cyan-500">
+                    <a>CONTRACT: 0XA1DA...5EDF</a>
                   </div>
                 </div>
               </Tabs.TabPane>
@@ -321,15 +348,19 @@ export default function Example() {
 
         </main>
       </div>
+    
+
+    {/*Body Section*/}
 
     <div className="bg-white">
-      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Vault Strategy</h2>
+      {/*Vault Strategy*/}
+      <div className="mx-auto px-40 md:grid-col-2 flex flex-row px-14">
+        <div className="mx-auto w-screen h-screen max-w-7xl py-20">
+          <h2 className="py-3 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Vault Strategy</h2>
           <p className="mt-4 text-gray-500">
-          The vault earns yield on its rETH deposits by running a weekly automated rETH covered call strategy 
-          where it stakes its rETH deposits in and then uses its to collateralize weekly out-of-money rETH 
-          call options. The yield earned from both the covered call strategy and the rETH staking rewards are
+          The vault earns yield on its wETH deposits by running a weekly automated wETH covered call strategy 
+          where it stakes its wETH deposits in and then uses its to collateralize weekly out-of-money wETH 
+          call options. The yield earned from both the covered call strategy and the wETH staking rewards are
            reinvested weekly, effectively compounding the yields for depositors over time.
           </p>
 
@@ -344,16 +375,32 @@ export default function Example() {
         </div>
         
         {/*Charts*/}
-        <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
+        <div className="mx-auto my-auto w-screen h-full max-w-7xl py-20 px-20 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
          <div className="container-lg">
          <div className="app">
-          <div className="row">
-            <div className="mixed-chart">
+          <div className="col-2">
+            <div className="mixed-chart py-20">
+              <div className="text-lg font-bold py-4">
+                Vault Balance (last 7 days)
+              </div>
               <Chart
+                className="color-cyan-500"
                 options={options}
                 series={series}
                 type="area"
                 width="500"
+              />
+            </div>
+            <div className="donut">
+              <div className="text-lg font-bold py-4">
+                Asset Allocation
+              </div>
+              <Chart 
+                options={options2} 
+                series={series2}
+                labels={labels2}
+                type="donut" 
+                width="380" 
               />
             </div>
           </div>
