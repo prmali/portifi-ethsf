@@ -16,7 +16,8 @@ contract VaultFactory is IVaultFactory {
 		string memory _name,
 		string memory _symbol
 	) external returns(address ) {
-		vault = new Vault(_asset, _name, _symbol);
+		require(msg.sender == registry, "Caller must be Registry Contract");
+		vault = new Vault(_asset, _name, _symbol, msg.sender);
 		return address(vault);
 	}
 

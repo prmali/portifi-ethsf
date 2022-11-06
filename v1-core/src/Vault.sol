@@ -25,12 +25,18 @@ contract Vault is ERC4626 {
         return guardians[sender];
     }
 
+    function setGuardian(address guardian, bool flag) public onlyGuardian {
+        guardians[guardian] = flag;
+    }
+
     constructor(
         address baseAsset,
         string memory name,
-        string memory ticker
+        string memory ticker,
+        address guardian_
     ) ERC4626(ERC20(baseAsset), name, ticker) {
         factory = msg.sender;
+        guardians[guardian_] = true;
     }
 
     function approve(
@@ -47,6 +53,7 @@ contract Vault is ERC4626 {
             .execute(sAddress, strategyData);
     }
 
+    // TODO: just to override ERC4626 - not useful
     function totalAssets() public view virtual override returns (uint256) {
         return ERC20(asset).balanceOf(address(this));
     }

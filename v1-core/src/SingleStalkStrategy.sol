@@ -10,7 +10,7 @@ import {Vault} from "./Vault.sol";
 
 contract SingleStalkStrategy is IStrategy {
     ZRXHelper internal helper;
-
+    address controller;
     bytes data;
 
     function executeStrategy(
@@ -23,13 +23,11 @@ contract SingleStalkStrategy is IStrategy {
         for (uint256 i = 0; i < batchPD.length; i++) {
             PairData memory pd = batchPD[i];
 
-            Vault(msg.sender).approve(address(this), pd.token0, pd.amount);
-            helper.fillQuote(
-                IERC20(pd.token0),
-                IERC20(pd.token1),
-                address(this),
-                payable(address(msg.sender)),
-                data
+            Vault(msg.sender).approve(address(strategyAddress), pd.token0, pd.amount);
+            IERC20(pd.token0).transferFrom(
+                msg.sender,
+                address(strategyAddress),
+                pd.amount
             );
         }
     }

@@ -970,7 +970,7 @@
       }
     },
     "src/SingleStalkStrategy.sol": {
-      "lastModificationDate": 1667706245464,
+      "lastModificationDate": 1667704653146,
       "contentHash": "0d69c94ca1e079386e76550b7182d0ca",
       "sourceName": "src/SingleStalkStrategy.sol",
       "solcConfig": {
@@ -1019,8 +1019,59 @@
         }
       }
     },
+    "src/SwapStalkStrategy.sol": {
+      "lastModificationDate": 1667721669274,
+      "contentHash": "12c519f53eb494a0f2aaf9f8c04e89b2",
+      "sourceName": "src/SwapStalkStrategy.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/forge-std/src/interfaces/IERC20.sol",
+        "lib/solmate/src/mixins/ERC4626.sol",
+        "lib/solmate/src/tokens/ERC20.sol",
+        "lib/solmate/src/utils/FixedPointMathLib.sol",
+        "lib/solmate/src/utils/SafeTransferLib.sol",
+        "src/Vault.sol",
+        "src/VaultFactory.sol",
+        "src/helpers/ZRXHelper.sol",
+        "src/interfaces/IStrategy.sol",
+        "src/interfaces/IVaultFactory.sol"
+      ],
+      "versionRequirement": "=0.8.15",
+      "artifacts": {
+        "SwapStalkStrategy": {
+          "0.8.15+commit.e14f2714.Darwin.appleclang": "SwapStalkStrategy.sol/SwapStalkStrategy.json"
+        }
+      }
+    },
     "src/Vault.sol": {
-      "lastModificationDate": 1667706245464,
+      "lastModificationDate": 1667704070077,
       "contentHash": "2d77017197dd11fccc904ef9f48ef1b7",
       "sourceName": "src/Vault.sol",
       "solcConfig": {
@@ -1068,8 +1119,8 @@
       }
     },
     "src/VaultFactory.sol": {
-      "lastModificationDate": 1667717957456,
-      "contentHash": "6683ad1eb2b7a88ce7f884228f2c3e42",
+      "lastModificationDate": 1667701555345,
+      "contentHash": "e469523572359b50174e59fe506b8b0e",
       "sourceName": "src/VaultFactory.sol",
       "solcConfig": {
         "settings": {
