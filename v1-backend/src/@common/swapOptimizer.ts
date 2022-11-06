@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber, utils } from "ethers";
 import { ActionEnum, Difference } from "./generatePortfolioDiff";
 
 interface Position {
@@ -24,10 +24,10 @@ export default async (
 	let blacklistedMovers: Set<string> = new Set();
 
 	// cleanup deltas
-	for (let address in Object.keys(actual)) {
-		const pricePerToken = actual[address].value.div(
-			actual[address].balance
-		);
+	for (let address of Object.keys(actual)) {
+		const pricePerToken = utils
+			.parseEther(actual[address].value.toString())
+			.div(utils.parseEther(actual[address].balance.toString()));
 
 		if (!expected[address] || blacklistedMovers.has(address)) {
 			continue;
@@ -53,7 +53,7 @@ export default async (
 		}
 	}
 
-	for (let address in Object.keys(expected)) {
+	for (let address of Object.keys(expected)) {
 		const pricePerToken = expected[address].value.div(
 			expected[address].balance
 		);
@@ -94,15 +94,21 @@ export default async (
 		iExpected < iteratableExpected.length
 	) {
 		const actualAsset = iteratableActual[iActual];
-		const aPricePerToken = actualAsset.value.div(actualAsset.balance);
+		const aPricePerToken = utils
+			.parseEther(actualAsset.value.toString())
+			.div(utils.parseEther(actualAsset.balance.toString()));
 		const expectedAsset = iteratableExpected[iExpected];
-		const ePricePerToken = expectedAsset.value.div(expectedAsset.balance);
+		const ePricePerToken = utils
+			.parseEther(expectedAsset.value.toString())
+			.div(utils.parseEther(expectedAsset.balance.toString()));
 
 		if (actualAsset.value >= expectedAsset.delta) {
 			const entry = {
 				from: actualAsset.address,
 				to: expectedAsset.address,
-				amount: expectedAsset.delta.div(aPricePerToken),
+				amount: utils
+					.parseEther(expectedAsset.delta.toString())
+					.div(utils.parseEther(aPricePerToken.toString())),
 			};
 			swapBook.push(entry);
 

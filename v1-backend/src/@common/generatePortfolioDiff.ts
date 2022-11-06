@@ -134,23 +134,19 @@ const correlatePortfolio = (
 		const dataObj = {
 			tokenType: basePortfolio.portfolio[tokenAddress].tokenType,
 			// token count
-			balance: utils.formatEther(
-				BigNumber.from(
-					vaultPortfolio.networth
-						.mul(basePortfolio.portfolio[tokenAddress].ratio)
-						.div(utils.parseEther("1"))
-				)
+			balance: vaultPortfolio.networth.mul(
+				basePortfolio.portfolio[tokenAddress].ratio
 			),
 			// in usd
 			value: null,
 			delta: null,
 		};
 
-		dataObj.value = utils.formatEther(
+		dataObj.value = utils.parseEther(
 			estimateValue(
 				priceMappings[tokenAddress],
-				dataObj.balance.toString()
-			)
+				utils.formatEther(dataObj.balance)
+			).toString()
 		);
 
 		dataObj.delta = dataObj.value;
@@ -174,45 +170,27 @@ export default async (
 	vaultAddress: string, // vault
 	alchemyClient: Alchemy
 ): Promise<any> => {
-	const account1Portfolio: StandardizedPortfolio = await standardizePortfolio(
+	const basePortfolio: StandardizedPortfolio = await standardizePortfolio(
 		baseAddress,
 		alchemyClient
 	);
 
-	const account2Portfolio: StandardizedPortfolio = await standardizePortfolio(
+	const vaultPortfolio: StandardizedPortfolio = await standardizePortfolio(
 		vaultAddress,
 		alchemyClient
 	);
 
-	const expectedPortfolio = correlatePortfolio(
-		account1Portfolio,
-		account2Portfolio
-	);
+	const expectedPortfolio = correlatePortfolio(basePortfolio, vaultPortfolio);
 
-	// let x = {};
-
-	// for (let key of Object.keys(expectedPortfolio)) {
-	// 	x[key] = {
-	// 		balance: expectedPortfolio[key].balance.toString(),
-	// 		value: expectedPortfolio[key].value.toString(),
-	// 		delta: expectedPortfolio[key].delta.toString(),
-	// 	};
-	// }
-
-	// return x;
-
-	return swapOptimizer(
-		account2Portfolio.portfolio as any,
+	const orderBook = swapOptimizer(
+		vaultPortfolio.portfolio as any,
 		expectedPortfolio as any
 	);
+
+	return {
+		basePortfolio,
+		vaultPortfolio,
+		expectedPortfolio,
+		orderBook,
+	};
 };
-
-/* 
-get portfolio of stalk account (ST) ✔️
-get portfolio of vault (V) ✔️
-
-find ratio of ST tokens, pick top ✔️
-Add ST ratio to V ✔️
-Add delta in USD ✔️
-Move V tokens not in ST ratio to ST ratio tokens
-*/
