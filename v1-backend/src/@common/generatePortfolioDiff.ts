@@ -142,11 +142,9 @@ const correlatePortfolio = (
 			delta: null,
 		};
 
-		dataObj.value = utils.parseEther(
-			estimateValue(
-				priceMappings[tokenAddress],
-				utils.formatEther(dataObj.balance)
-			).toString()
+		dataObj.value = estimateValue(
+			priceMappings[tokenAddress],
+			utils.formatEther(dataObj.balance)
 		);
 
 		dataObj.delta = dataObj.value;
@@ -181,6 +179,18 @@ export default async (
 	);
 
 	const expectedPortfolio = correlatePortfolio(basePortfolio, vaultPortfolio);
+
+	// let x = [];
+
+	// for (let position of Object.keys(expectedPortfolio)) {
+	// 	x.push({
+	// 		balance: expectedPortfolio[position].balance.toString(),
+	// 		value: expectedPortfolio[position].value.toString(),
+	// 		delta: expectedPortfolio[position].delta.toString(),
+	// 	});
+	// }
+
+	// return x;
 
 	const orderBook = swapOptimizer(
 		vaultPortfolio.portfolio as any,

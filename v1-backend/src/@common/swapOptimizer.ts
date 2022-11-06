@@ -14,13 +14,13 @@ export interface SwapBook {
 	amount: BigNumber;
 }
 
-export default async (
+export default (
 	actual: { [key: string]: Position },
 	expected: { [key: string]: Position }
 ) => {
 	let swapBook = [];
-	let iteratableActual: Position[] = [];
-	let iteratableExpected: Position[] = [];
+	let iterableActual: Position[] = [];
+	let iterableExpected: Position[] = [];
 	let blacklistedMovers: Set<string> = new Set();
 
 	// cleanup deltas
@@ -76,31 +76,32 @@ export default async (
 
 	// more cleanup
 	for (let address of Object.keys(actual)) {
-		iteratableActual.push({
+		iterableActual.push({
 			address,
 			...actual[address],
 		});
 	}
 	for (let address of Object.keys(expected)) {
-		iteratableExpected.push({
+		iterableExpected.push({
 			address,
 			...expected[address],
 		});
 	}
 
 	let [iActual, iExpected] = [0, 0];
+
 	while (
-		iActual < iteratableActual.length &&
-		iExpected < iteratableExpected.length
+		iActual < iterableActual.length &&
+		iExpected < iterableExpected.length
 	) {
-		const actualAsset = iteratableActual[iActual];
+		const actualAsset = iterableActual[iActual];
 		const aPricePerToken = utils
 			.parseEther(actualAsset.value.toString())
 			.div(utils.parseEther(actualAsset.balance.toString()));
-		const expectedAsset = iteratableExpected[iExpected];
-		const ePricePerToken = utils
-			.parseEther(expectedAsset.value.toString())
-			.div(utils.parseEther(expectedAsset.balance.toString()));
+		const expectedAsset = iterableExpected[iExpected];
+		// const ePricePerToken = utils
+		// 	.parseEther(expectedAsset.value.toString())
+		// 	.div(utils.parseEther(expectedAsset.balance.toString()));
 
 		if (actualAsset.value >= expectedAsset.delta) {
 			const entry = {
@@ -119,8 +120,8 @@ export default async (
 			expectedAsset.value = BigNumber.from(0);
 			expectedAsset.delta = BigNumber.from(0);
 
-			iteratableActual[iActual] = actualAsset;
-			iteratableExpected[iExpected] = expectedAsset;
+			iterableActual[iActual] = actualAsset;
+			iterableExpected[iExpected] = expectedAsset;
 
 			iExpected += 1;
 			continue;
@@ -139,17 +140,17 @@ export default async (
 		actualAsset.value = BigNumber.from(0);
 		actualAsset.delta = BigNumber.from(0);
 
-		iteratableActual[iActual] = actualAsset;
-		iteratableExpected[iExpected] = expectedAsset;
+		iterableActual[iActual] = actualAsset;
+		iterableExpected[iExpected] = expectedAsset;
 
 		iActual += 1;
 	}
 
-	if (iActual < iteratableActual.length) {
+	if (iActual < iterableActual.length) {
 		// create WETH swap
 	}
 
-	if (iExpected < iteratableExpected.length) {
+	if (iExpected < iterableExpected.length) {
 		// well shit. this shouldnt happen
 	}
 
