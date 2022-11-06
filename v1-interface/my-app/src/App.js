@@ -1,18 +1,19 @@
+import { Contract } from "ethers";
+import {
+  VAULT_CONTRACT_ABI,
+  VAULT_CONTRACT_ADDRESS,
+} from "../constants";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Chart from 'react-apexcharts'
 import { Tabs, InputNumber } from 'antd';
-import { useState } from 'react';
 import './App.css';
+
 
 const onChange = (value) => {
   console.log('changed', value);
 };
-const items = [
-  { label: 'WITHDRAW', key: 'withdraw', children: 'Content 1' }, // remember to pass the key prop
-  { label: 'DEPOSIT', key: 'deposit', children: 'Content 2' }
-];
 
 const user = {
   name: 'Tom Cook',
@@ -79,6 +80,27 @@ const labels2 = ['BTC', 'ETH', 'MATIC', 'AVAX',];
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+
+/**
+ * getEtherBalance: Retrieves the ether balance of the user or the contract
+ */
+ export const getEtherBalance = async (provider, address, contract = false) => {
+  try {
+    // If the caller has set the `contract` boolean to true, retrieve the balance of
+    // ether in the `exchange contract`, if it is set to false, retrieve the balance
+    // of the user's address
+    if (contract) {
+      const balance = await provider.getBalance(VAULT_CONTRACT_ADDRESS);
+      return balance;
+    } else {
+      const balance = await provider.getBalance(address);
+      return balance;
+    }
+  } catch (err) {
+    console.error(err);
+    return 0;
+  }
+};
 
 export default function Example() {
   
@@ -284,19 +306,6 @@ export default function Example() {
                   </div>
                 </div>
               </div>
-
-              <div className="container-sm rounded-lg w-5/6 h-48 bg-gray-900 border-4 border-cyan-400 py-3 px-3 my-3 flex col-3">
-
-                {/*Price Feed*/}
-                <div className='text-3xl font-bold'>
-                  Current Price: 3 ETH
-                </div>
-
-                {/*Price Change*/}
-                <div className='text-xl primary-indigo-400'>
-                    Filler
-                </div>
-              </div>
             </div>
 
             {/* /End replace */}
@@ -306,7 +315,7 @@ export default function Example() {
           
           
           {/*Deposit and Withdraw (check the constants at the top to edit contents of tabs)*/}
-          <div className="flex flex-row rounded-xl m-auto w-2/3 h-screen my-0 items-center gap-y-16 gap-x-8 mx-10 sm:px-6 sm:py-32 items-center justify-center">
+          <div className="flex flex-row rounded-xl m-auto w-2/3 h-7/8 my-0 items-center gap-y-16 gap-x-8 mx-10 my-12 sm:px-6 sm:py-20 items-center justify-center">
             <Tabs className="text-white content-center place-content-center justify-self-center bg-gray-900 border-4 border-cyan-400 backdrop-opacity-70 bg-blend-soft-light rounded-md w-full h-full">
               
               {/*Deposit Function*/}
