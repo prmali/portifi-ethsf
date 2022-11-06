@@ -51,37 +51,23 @@ require('yargs')
     }
   ).argv;
 
-async function deploy() {}
-
 async function swap(argv) {
   console.log('argv', argv);
 
   const signer = new ethers.Wallet(TAKER_PRIVATE_KEY).connect(new ethers.providers.JsonRpcProvider(RPC_URL));
-  // const vault = new ethers.Contract();
-  // const [taker] = await web3.eth.getAccounts();
 
   const token0 = new ethers.Contract(argv.token0, ERC20_ABI, signer);
-  // console.log('Token0: ', token0);
   const token1 = new ethers.Contract(argv.token1, ERC20_ABI, signer);
 
-  console.info(`Deposit ${argv.sellAmount} of token0 from the vault`);
-  // const tx = await token0.deposit();
+  const vault = new ethers.Contract(argv.token0, ERC20_ABI, signer);
 
-  // // Convert sellAmount from token units to wei.
-  // const sellAmountWei = etherToWei(argv.sellAmount);
+  console.info(`Deposit ${argv.sellAmount} of token0 from the vault`);
 
   // Track our token1 balance.
   const t1StartingBal = await token1.balanceOf(signer.address);
   const t0symbol = await token0.symbol();
   const t1symbol = await token1.symbol();
   console.log(t1symbol, 'with starting balance: ', t1StartingBal);
-
-  // await waitForTxSuccess(
-  //   weth.methods.deposit().send({
-  //     value: sellAmountWei,
-  //     from: taker,
-  //   })
-  // );
 
   // Get a quote from 0x-API to sell the WETH we just minted.
   console.info(`Fetching swap quote from 0x-API to sell ${argv.sellAmount} ${t0symbol} for ${t1symbol}...`);
@@ -90,7 +76,7 @@ async function swap(argv) {
     buyToken: argv.token1,
     sellAmount: argv.sellAmount,
     // 0x-API cannot perform taker validation in forked mode.
-    ...(FORKED ? {} : { takerAddress: signer.address }),
+    ...(FORKED ? {} : { takerAddress: vault.address }),
   });
   const quoteUrl = `${API_QUOTE_URL}?${qs}`;
   console.info(`Fetching quote ${quoteUrl.bold}...`);
