@@ -1,0 +1,30 @@
+{
+  "name": "portifi-contracts",
+  "version": "1.0.0",
+  "description": "Portifi Contracts",
+  "scripts": {
+    "postinstall": "forge build",
+    "start-fork": "ganache-cli -m \"${npm_package_config_mnemonic}\" -f ${RPC_URL} -i 1 -p 7545",
+    "print-hd-wallet-accounts": "MNEMONIC=\"${npm_package_config_mnemonic}\" node src/print-hd-wallet-accounts.js",
+    "compile": "forge compile",
+    "build": "forge build",
+    "script": "forge --script ",
+    "deploy-live": "MNEMONIC=\"${npm_package_config_mnemonic}\" truffle migrate -f 2",
+    "deploy-fork": "truffle migrate -f 2 --network forked-mainnet",
+    "swap-live": "MNEMONIC=\"${npm_package_config_mnemonic}\" node src/direct-swap.js",
+    "swap-fork": "MNEMONIC=\"${npm_package_config_mnemonic}\" RPC_URL=http://localhost:7545 FORKED=1 node src/direct-swap.js",
+    "swap-contract-live": "MNEMONIC=\"${npm_package_config_mnemonic}\" node src/swap-contract.js",
+    "swap-contract-fork": "MNEMONIC=\"${npm_package_config_mnemonic}\" RPC_URL=http://localhost:7545 FORKED=1 node src/swap-contract.js \"${npm_package_config_forked_deployed_address}\""
+  },
+  "config": {},
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "qs": "*",
+    "bignumber.js": "^9.0.1",
+    "node-fetch": "^2.6.1",
+    "ethers": "^5.6.9",
+    "yargs": "^16.0.3"
+  },
+  "devDependencies": {}
+}
