@@ -1,0 +1,159 @@
+{
+	"basePortfolio": {
+		"portfolio": {
+			"0x0f2d719407fdbeff09d87557abb7232601fd9f29": {
+				"tokenType": 0,
+				"value": {
+					"type": "BigNumber",
+					"hex": "0x09c6b7f74f5cebe92c00"
+				},
+				"balance": "46954.77",
+				"price": {
+					"type": "BigNumber",
+					"hex": "0x0da51c1bf1fe7000"
+				},
+				"ratio": {
+					"type": "BigNumber",
+					"hex": "0x0293b154871a33f9"
+				}
+			},
+			"0x514910771af9ca656af840dff83e8264ecf986ca": {
+				"tokenType": 0,
+				"value": {
+					"type": "BigNumber",
+					"hex": "0x1e2a33cf37551ed48000"
+				},
+				"balance": "16921.36",
+				"price": {
+					"type": "BigNumber",
+					"hex": "0x74d3e51368254000"
+				},
+				"ratio": {
+					"type": "BigNumber",
+					"hex": "0x07f37fab3694f0a9"
+				}
+			},
+			"0x5a98fcbea516cf06857215779fd812ca3bef1b32": {
+				"tokenType": 0,
+				"value": {
+					"type": "BigNumber",
+					"hex": "0x09e3a36da7acc4fd4000"
+				},
+				"balance": "28181.24",
+				"price": {
+					"type": "BigNumber",
+					"hex": "0x16ff5f53783fc000"
+				},
+				"ratio": {
+					"type": "BigNumber",
+					"hex": "0x029b50cfe29a03b1"
+				}
+			}
+		},
+		"networth": {
+			"type": "BigNumber",
+			"hex": "0x34a6288e42943d6f2c00"
+		}
+	},
+	"vaultPortfolio": {
+		"portfolio": {
+			"0x8888801af4d980682e47f1a9036e589479e835c5": {
+				"tokenType": 0,
+				"value": {
+					"type": "BigNumber",
+					"hex": "0x01400e5e2d31077400"
+				},
+				"balance": "13.17",
+				"price": {
+					"type": "BigNumber",
+					"hex": "0x184d49d2d60b1000"
+				},
+				"ratio": {
+					"type": "BigNumber",
+					"hex": "0x0de0b6b3a7640000"
+				}
+			}
+		},
+		"networth": {
+			"type": "BigNumber",
+			"hex": "0x01400e5e2d31077400"
+		}
+	},
+	"expectedPortfolio": {
+		"0x0f2d719407fdbeff09d87557abb7232601fd9f29": {
+			"tokenType": 0,
+			"balance": {
+				"type": "BigNumber",
+				"hex": "0x3b6e2555e27bdc47"
+			},
+			"value": {
+				"type": "BigNumber",
+				"hex": "0x3a6ee5eafe395d38"
+			},
+			"delta": {
+				"type": "BigNumber",
+				"hex": "0x3a6ee5eafe395d38"
+			},
+			"price": {
+				"type": "BigNumber",
+				"hex": "0x0da51c1bf1fe7000"
+			}
+		},
+		"0x514910771af9ca656af840dff83e8264ecf986ca": {
+			"tokenType": 0,
+			"balance": {
+				"type": "BigNumber",
+				"hex": "0xb75fa2f6ee414de0"
+			},
+			"value": {
+				"type": "BigNumber",
+				"hex": "0x0607b2be12a0ead326"
+			},
+			"delta": {
+				"type": "BigNumber",
+				"hex": "0x0607b2be12a0ead326"
+			},
+			"price": {
+				"type": "BigNumber",
+				"hex": "0x74d3e51368254000"
+			}
+		},
+		"0x5a98fcbea516cf06857215779fd812ca3bef1b32": {
+			"tokenType": 0,
+			"balance": {
+				"type": "BigNumber",
+				"hex": "0x3c1df355f892fc05"
+			},
+			"value": {
+				"type": "BigNumber",
+				"hex": "0x639f6cfd6a814170"
+			},
+			"delta": {
+				"type": "BigNumber",
+				"hex": "0x639f6cfd6a814170"
+			},
+			"price": {
+				"type": "BigNumber",
+				"hex": "0x16ff5f53783fc000"
+			}
+		}
+	},
+	"orderBook": [
+		{
+			"from": "0x8888801af4d980682e47f1a9036e589479e835c5",
+			"to": "0x0f2d719407fdbeff09d87557abb7232601fd9f29",
+			"amount": {
+				"type": "BigNumber",
+				"hex": "0x215e64444d8a3bc7"
+			}
+		},
+		{
+			"from": "0x8888801af4d980682e47f1a9036e589479e835c5",
+			"to": "0x514910771af9ca656af840dff83e8264ecf986ca",
+			"amount": {
+				"type": "BigNumber",
+				"hex": "0x9566d8f49e5ac439"
+			}
+		}
+	]
+}

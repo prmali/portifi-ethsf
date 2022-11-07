@@ -107,7 +107,7 @@ async function swap(argv) {
   const createReceipt = await signer.sendTransaction(tx);
 
   // Detect balances changes.
-  const boughtAmount = weiToEther(new BigNumber(await dai.methods.balanceOf(taker).call()).minus(daiStartingBalance));
+  const boughtAmount = weiToEther(new BigNumber(await token1.balanceOf(signer.address).call()).minus(t1StartingBal));
   console.info(
     `${'✔'.bold.green} Successfully sold ${argv.sellAmount.toString().bold} ${t0symbol} for ${
       boughtAmount.bold.green
