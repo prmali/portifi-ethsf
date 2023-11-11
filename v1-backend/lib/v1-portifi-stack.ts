@@ -23,19 +23,19 @@ export class V1PortifiStack extends Stack {
 		};
 
 		/*****		LAMBDAS		*****/
-		const meanReversionLambda = new lambda.NodejsFunction(
-			this,
-			"MeanReversionLambda",
-			{
-				entry: path.resolve(__dirname, "../src/meanReversion/app.ts"),
-				handler: "lambdaHandler",
-				functionName: "DEV-Portifi-MeanReversion",
-				memorySize: 512,
-				timeout: Duration.minutes(5),
-				runtime: Runtime.NODEJS_16_X,
-				bundling,
-			}
-		);
+		// const meanReversionLambda = new lambda.NodejsFunction(
+		// 	this,
+		// 	"MeanReversionLambda",
+		// 	{
+		// 		entry: path.resolve(__dirname, "../src/meanReversion/app.ts"),
+		// 		handler: "lambdaHandler",
+		// 		functionName: "DEV-Portifi-MeanReversion",
+		// 		memorySize: 512,
+		// 		timeout: Duration.minutes(5),
+		// 		runtime: Runtime.NODEJS_16_X,
+		// 		bundling,
+		// 	}
+		// );
 
 		const singleStalkLambda = new lambda.NodejsFunction(
 			this,
@@ -57,7 +57,8 @@ export class V1PortifiStack extends Stack {
 			"MainSecrets",
 			"arn:aws:secretsmanager:us-east-2:191860909899:secret:portifi-secrets"
 		);
-		secrets.grantRead(meanReversionLambda);
+		//secrets.grantRead(meanReversionLambda);
+		secrets.grantRead(singleStalkLambda);
 		singleStalkLambda.addEnvironment("MAIN_SECRETS", secrets.secretArn);
 	}
 }

@@ -23,9 +23,10 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Chart from "react-apexcharts";
 import { Tabs, InputNumber } from "antd";
 import "./App.css";
+import ConnectWallet from "./ConnectWallet";
 
 const { chains, provider } = configureChains(
-	[chain.mainnet],
+	[chain.localhost],
 	[infuraProvider({ apiKey: "yourInfuraApiKey" }), publicProvider()]
 );
 

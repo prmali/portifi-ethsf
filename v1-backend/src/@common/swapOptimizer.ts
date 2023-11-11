@@ -1,6 +1,8 @@
 import { BigNumber, utils } from "ethers";
 import { ActionEnum, Difference } from "./generatePortfolioDiff";
 
+const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+
 interface Position {
 	address: string;
 	balance: BigNumber;
@@ -9,17 +11,17 @@ interface Position {
 	price: BigNumber;
 }
 
-export interface SwapBook {
-	from: string;
-	to: string;
-	amount: BigNumber;
+export interface Swap {
+	token0: string;
+	token1: string;
+	sellAmount: BigNumber;
 }
 
 export default (
 	actual: { [key: string]: Position },
 	expected: { [key: string]: Position }
 ) => {
-	let swapBook = [];
+	let swapBook: Swap[] = [];
 	let iterableActual: Position[] = [];
 	let iterableExpected: Position[] = [];
 	let blacklistedMovers: Set<string> = new Set();
@@ -107,10 +109,10 @@ export default (
 		// 	.div(utils.parseEther(expectedAsset.balance.toString()));
 
 		if (actualAsset.value.gte(expectedAsset.delta)) {
-			const entry = {
-				from: actualAsset.address,
-				to: expectedAsset.address,
-				amount: utils
+			const entry: Swap = {
+				token0: actualAsset.address,
+				token1: expectedAsset.address,
+				sellAmount: utils
 					.parseEther(expectedAsset.delta.toString())
 					.div(aPricePerToken),
 			};
@@ -118,11 +120,11 @@ export default (
 
 			console.log(
 				actualAsset.balance.toString(),
-				utils.formatEther(entry.amount)
+				utils.formatEther(entry.sellAmount)
 			);
 			actualAsset.balance = utils
 				.parseEther(actualAsset.balance.toString())
-				.sub(utils.parseEther(utils.formatEther(entry.amount)));
+				.sub(utils.parseEther(utils.formatEther(entry.sellAmount)));
 			actualAsset.value = actualAsset.value.sub(expectedAsset.delta);
 
 			expectedAsset.balance = BigNumber.from(0);
@@ -136,10 +138,10 @@ export default (
 			continue;
 		}
 
-		const entry = {
-			from: actualAsset.address,
-			to: expectedAsset.address,
-			amount: actualAsset.balance,
+		const entry: Swap = {
+			token0: actualAsset.address,
+			token1: expectedAsset.address,
+			sellAmount: actualAsset.balance,
 		};
 		swapBook.push(entry);
 
@@ -155,9 +157,14 @@ export default (
 		iActual += 1;
 	}
 
-	if (iActual < iterableActual.length) {
+	while (iActual < iterableActual.length) {
 		console.log("extra liquidity");
-		// create WETH swap
+		swapBook.push({
+			token0: iterableActual[iActual].address as string,
+			token1: WETH,
+			sellAmount: iterableActual[iActual].balance,
+		});
+		iActual += 1;
 	}
 
 	if (iExpected < iterableExpected.length) {
